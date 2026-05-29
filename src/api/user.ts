@@ -1,6 +1,5 @@
 import type { Membership, UserMe } from '../types';
 import { RestrictedAccessError } from '../errors/RestrictedAccessError';
-import { logout } from './auth';
 import { api } from './client';
 
 const ALLOWED_ORG_SLUG = 'norma+';
@@ -10,7 +9,7 @@ export const getUserMe = async (): Promise<UserMe> => {
     return data;
 };
 
-export const getActiveMembership = async (memberships: Membership[]): Promise<Membership> => {
+export const getActiveMembership = (memberships: Membership[]): Membership => {
     const membership = memberships.find(
         (membership) =>
             membership.isActive &&
@@ -19,7 +18,6 @@ export const getActiveMembership = async (memberships: Membership[]): Promise<Me
     ) ?? null;
 
     if (!membership) {
-        await logout();
         throw new RestrictedAccessError();
     }
 

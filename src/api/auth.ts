@@ -1,7 +1,11 @@
 import { api } from './client';
 
 export const logout = async () => {
-    await api.post('/auth/logout');
+    try {
+        await api.post('/auth/logout');
+    } catch {
+        // Session may already be invalid or expired
+    }
 };
 
 export const login = async (credentials: { email: string; password: string }) => {
