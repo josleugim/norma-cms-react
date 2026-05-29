@@ -6,8 +6,6 @@ import { getActiveMembership, getUserMe } from '../api/user';
 import { RestrictedAccessError } from '../errors/RestrictedAccessError';
 import type { LoginResult } from '../types';
 
-
-
 const useLogin = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +17,7 @@ const useLogin = () => {
         try {
             await loginRequest(authData);
             const user = await getUserMe();
-            const membership = getActiveMembership(user.memberships);
+            const membership = await getActiveMembership(user.memberships);
 
             return {
                 user,
@@ -28,7 +26,7 @@ const useLogin = () => {
             };
 
         } catch (err) {
-            logout();
+            await logout();
             if (err instanceof RestrictedAccessError) {
                 toast.error('Acceso restringido');
                 setError('Acceso restringido');

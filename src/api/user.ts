@@ -10,7 +10,7 @@ export const getUserMe = async (): Promise<UserMe> => {
     return data;
 };
 
-export const getActiveMembership = (memberships: Membership[]): Membership => {
+export const getActiveMembership = async (memberships: Membership[]): Promise<Membership> => {
     const membership = memberships.find(
         (membership) =>
             membership.isActive &&
@@ -19,7 +19,7 @@ export const getActiveMembership = (memberships: Membership[]): Membership => {
     ) ?? null;
 
     if (!membership) {
-        logout();
+        await logout();
         throw new RestrictedAccessError();
     }
 
