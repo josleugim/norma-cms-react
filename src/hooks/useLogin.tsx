@@ -1,39 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+import { login as loginRequest, logout } from '../api/auth';
+import { getActiveMembership, getUserMe } from '../api/user';
+import { RestrictedAccessError } from '../errors/RestrictedAccessError';
+import type { LoginResult } from '../types';
+
+
 
 const useLogin = () => {
-    const [authData] = useState<{ email: string, password: string }>({ email: '', password: '' });
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const login = async (authData: { email: string; password: string }): Promise<LoginResult> => {
+        setIsLoading(true);
+        setError(null);
 
-    useEffect(() => {
-        
-    }, [authData]);
-
-    const postLogin = async (authData: { email: string, password: string }) => {
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(authData),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to login');
+            await loginRequest(authData);
+            const user = await getUserMe();
+            const membership = getActiveMembership(user.memberships);
+
+            return {
+                user,
+                membership,
+                organization: membership.organization,
+            };
+
+        } catch (err) {
+            logout();
+            if (err instanceof RestrictedAccessError) {
+                toast.error('Acceso restringido');
+                setError('Acceso restringido');
+                navigate('/login', { replace: true });
+            } else {
+                const message = err instanceof Error ? err.message : 'Login failed';
+                setError(message);
             }
-            
-            // TODO: Handle successful login
-            console.log('Login successful');
-        } catch (error) {
-            console.error(error);
+            throw err;
+        } finally {
+            setIsLoading(false);
         }
-    }
 
-    const login = async (authData: { email: string, password: string }) => {
-        const response: any = await postLogin(authData);
-        console.log(response);
     };
-
-    return { login };
-}
+    return { login, isLoading, error };
+};
 
 export default useLogin;
+
