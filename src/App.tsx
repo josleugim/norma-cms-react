@@ -8,6 +8,7 @@ import Login from './components/Auth/Login'
 import Menu from './components/Menu'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute, GuestRoute } from './components/Auth/ProtectedRoute'
+import Resolution from './components/Resolution'
 
 function App() {
   return (
@@ -26,6 +27,11 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/resolutions" element={
+              <ProtectedRoute>
+                <Resolution />
+              </ProtectedRoute>
+            } />
             <Route path="/login" element={
               <GuestRoute>
                 <Login />

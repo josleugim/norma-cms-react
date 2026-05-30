@@ -30,7 +30,12 @@ const Menu = () => {
             </div>
             <div id="navbarBasicExample" className="navbar-menu">
                 <div className="navbar-start">
-                    <Link className="navbar-item" to="/">Home</Link>
+                    {isAuthenticated && (
+                        <>
+                            <Link className="navbar-item" to="/">Home</Link>
+                            <Link className="navbar-item" to="/resolutions">Resolutions</Link>
+                        </>
+                    )}
                 </div>
                 <div className="navbar-end">
                     {!isLoading && isAuthenticated && (
@@ -44,7 +49,9 @@ const Menu = () => {
                         </>
                     )}
                     {!isLoading && !isAuthenticated && (
-                        <Link className="navbar-item" to="/login">Login</Link>
+                        <>
+                            <Link className="navbar-item" to="/login">Login</Link>
+                        </>
                     )}
                 </div>
             </div>
