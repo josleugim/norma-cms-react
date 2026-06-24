@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
@@ -7,6 +8,7 @@ import type { Paragraph } from '../types/paragraph';
 import useParagraphs from '../hooks/useParagraphs';
 
 const ParagraphList = () => {
+    const navigate = useNavigate();
     const {
         items,
         first,
@@ -29,6 +31,19 @@ const ParagraphList = () => {
         <Tag
             value={paragraph.isActive ? 'Activo' : 'Inactivo'}
             severity={paragraph.isActive ? 'success' : 'danger'}
+        />
+    );
+
+    const handleEdit = (paragraph: Paragraph) => {
+        navigate(`/criteria/${paragraph.id}/edit`);
+    };
+
+    const optionsBody = (paragraph: Paragraph) => (
+        <Button
+            className="button is-small is-link"
+            label="Modificar"
+            size="small"
+            onClick={() => handleEdit(paragraph)}
         />
     );
 
@@ -81,11 +96,12 @@ const ParagraphList = () => {
                 emptyMessage="No hay criterios para mostrar"
                 tableStyle={{ minWidth: '50rem' }}
             >
-                <Column field="id" header="ID" style={{ width: '5rem' }} />
+                <Column field="id" header="ID" style={{ width: '3rem' }} />
                 <Column field="caseLink" header="Case link" style={{ width: '10rem' }} />
                 <Column field="content" header="Contenido" />
                 <Column header="Títulos" body={titlesBody} style={{ width: '12rem' }} />
                 <Column header="Estado" body={statusBody} style={{ width: '8rem' }} />
+                <Column header="Opciones" body={optionsBody} style={{ width: '8rem' }} />
             </DataTable>
         </div>
     );

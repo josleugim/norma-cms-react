@@ -18,3 +18,8 @@ export type ParagraphQueryParams = {
     pageSize?: number;
     caseLink?: string;
 };
+
+export type ParagraphEditRequest = {
+    content: string;
+    isActive: boolean;
+};
