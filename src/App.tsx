@@ -1,5 +1,8 @@
 import './App.css'
 import 'bulma/css/bulma.css'
+import 'primereact/resources/themes/lara-light-cyan/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Toaster } from 'sonner'
 
@@ -33,7 +36,7 @@ function App() {
                 <Resolution />
               </ProtectedRoute>
             } />
-            <Route path="/paragraphs" element={
+            <Route path="/criteria" element={
               <ProtectedRoute>
                 <Paragraph />
               </ProtectedRoute>

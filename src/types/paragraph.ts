@@ -5,3 +5,16 @@ export type Paragraph = {
     caseLink: string;
     titles: string[];
 }
+
+export type ParagraphListResponse = {
+    items: Paragraph[];
+    page: number;
+    pageSize: number;
+    total: number;
+};
+
+export type ParagraphQueryParams = {
+    page?: number;
+    pageSize?: number;
+    caseLink?: string;
+};
