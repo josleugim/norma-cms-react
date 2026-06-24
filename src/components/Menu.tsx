@@ -34,6 +34,7 @@ const Menu = () => {
                         <>
                             <Link className="navbar-item" to="/">Home</Link>
                             <Link className="navbar-item" to="/resolutions">Resolutions</Link>
+                            <Link className="navbar-item" to="/criteria">Criterios</Link>
                         </>
                     )}
                 </div>

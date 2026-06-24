@@ -3,12 +3,13 @@ import 'bulma/css/bulma.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Toaster } from 'sonner'
 
-import Home from './components/Home'
-import Login from './components/Auth/Login'
+import Home from './pages/Home'
+import Login from './pages/Login'
 import Menu from './components/Menu'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute, GuestRoute } from './components/Auth/ProtectedRoute'
-import Resolution from './components/Resolution'
+import Resolution from './pages/Resolution'
+import Paragraph from './pages/Paragraph'
 
 function App() {
   return (
@@ -30,6 +31,11 @@ function App() {
             <Route path="/resolutions" element={
               <ProtectedRoute>
                 <Resolution />
+              </ProtectedRoute>
+            } />
+            <Route path="/paragraphs" element={
+              <ProtectedRoute>
+                <Paragraph />
               </ProtectedRoute>
             } />
             <Route path="/login" element={

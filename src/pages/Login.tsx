@@ -1,4 +1,4 @@
-import useLogin from '../../hooks/useLogin';
+import useLogin from '../hooks/useLogin';
 
 const Login = () => {
     const { login} = useLogin();
