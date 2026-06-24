@@ -6,6 +6,8 @@ import { getActiveMembership, getUserMe } from '../api/user';
 import { RestrictedAccessError } from '../errors/RestrictedAccessError';
 import type { Membership, Organization, UserMe } from '../types';
 
+const SESSION_FLAG_KEY = 'hasSession';
+
 type AuthContextValue = {
     user: UserMe | null;
     membership: Membership | null;
@@ -27,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const isAuthenticated = user !== null && membership !== null && organization !== null;
 
     const clearSession = () => {
+        localStorage.removeItem(SESSION_FLAG_KEY);
         setUser(null);
         setMembership(null);
         setOrganization(null);
@@ -37,6 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const user = await getUserMe();
             const membership = getActiveMembership(user.memberships);
 
+            localStorage.setItem(SESSION_FLAG_KEY, '1');
             setUser(user);
             setMembership(membership);
             setOrganization(membership.organization);
@@ -61,6 +65,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     useEffect(() => {
+        if (!localStorage.getItem(SESSION_FLAG_KEY)) {
+            setIsLoading(false);
+            return;
+        }
+
         const loadSession = async () => {
             setIsLoading(true);
             await refreshSession();
