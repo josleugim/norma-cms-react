@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import useOrganizations from "../hooks/useOrganizations";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
