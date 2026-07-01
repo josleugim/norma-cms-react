@@ -15,6 +15,8 @@ import Resolution from './pages/Resolution'
 import Paragraph from './pages/Paragraph'
 import ParagraphEdit from './pages/ParagraphEdit'
 import Organization from './pages/Organization'
+import Role from './pages/Role'
+import RoleCreate from './pages/RoleCreate'
 
 function App() {
   return (
@@ -51,6 +53,16 @@ function App() {
             <Route path="/organizations" element={
               <ProtectedRoute>
                 <Organization />
+              </ProtectedRoute>
+            } />
+            <Route path="/roles" element={
+              <ProtectedRoute>
+                <Role />
+              </ProtectedRoute>
+            } />
+            <Route path="/roles/create" element={
+              <ProtectedRoute>
+                <RoleCreate />
               </ProtectedRoute>
             } />
             <Route path="/login" element={
