@@ -44,3 +44,11 @@ export type LoginResult = {
     membership: Membership;
     organization: Organization;
 };
+
+export type UserCreateRequest = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};

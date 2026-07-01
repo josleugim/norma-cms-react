@@ -37,6 +37,7 @@ const Menu = () => {
                             <Link className="navbar-item" to="/criteria">Criterios</Link>
                             <Link className="navbar-item" to="/organizations">Organizaciones</Link>
                             <Link className="navbar-item" to="/roles">Roles</Link>
+                            <Link className="navbar-item" to="/users">Usuarios</Link>
                         </>
                     )}
                 </div>
