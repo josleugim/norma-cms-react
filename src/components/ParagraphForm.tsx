@@ -42,7 +42,7 @@ const ParagraphForm = ({
                         value={content}
                         onChange={(event) => setContent(event.target.value)}
                         rows={8}
-                        className="w-full"
+                        style={{ width: '100%' }}
                         required
                     />
                 </div>
