@@ -14,6 +14,7 @@ import { ProtectedRoute, GuestRoute } from './components/Auth/ProtectedRoute'
 import Resolution from './pages/Resolution'
 import Paragraph from './pages/Paragraph'
 import ParagraphEdit from './pages/ParagraphEdit'
+import Organization from './pages/Organization'
 
 function App() {
   return (
@@ -45,6 +46,11 @@ function App() {
             <Route path="/criteria/:id/edit" element={
               <ProtectedRoute>
                 <ParagraphEdit />
+              </ProtectedRoute>
+            } />
+            <Route path="/organizations" element={
+              <ProtectedRoute>
+                <Organization />
               </ProtectedRoute>
             } />
             <Route path="/login" element={
