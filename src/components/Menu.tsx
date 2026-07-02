@@ -38,6 +38,7 @@ const Menu = () => {
                             <Link className="navbar-item" to="/organizations">Organizaciones</Link>
                             <Link className="navbar-item" to="/roles">Roles</Link>
                             <Link className="navbar-item" to="/users">Usuarios</Link>
+                            <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
                         </>
                     )}
                 </div>
