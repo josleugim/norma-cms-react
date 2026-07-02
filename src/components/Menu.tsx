@@ -4,7 +4,9 @@ import { useAuth } from '../context/AuthContext';
 
 const Menu = () => {
     const navigate = useNavigate();
-    const { user, isAuthenticated, isLoading, clearSession } = useAuth();
+    const { user, membership, isAuthenticated, isLoading, clearSession } = useAuth();
+
+    const isAdmin = membership?.roles.some((role) => role.code === 'admin') ?? false;
 
     const handleLogout = async () => {
         await logout();
@@ -35,10 +37,14 @@ const Menu = () => {
                             <Link className="navbar-item" to="/">Home</Link>
                             <Link className="navbar-item" to="/resolutions">Resolutions</Link>
                             <Link className="navbar-item" to="/criteria">Criterios</Link>
-                            <Link className="navbar-item" to="/organizations">Organizaciones</Link>
-                            <Link className="navbar-item" to="/roles">Roles</Link>
-                            <Link className="navbar-item" to="/users">Usuarios</Link>
-                            <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
+                            {isAdmin && (
+                                <>
+                                    <Link className="navbar-item" to="/organizations">Organizaciones</Link>
+                                    <Link className="navbar-item" to="/roles">Roles</Link>
+                                    <Link className="navbar-item" to="/users">Usuarios</Link>
+                                    <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
