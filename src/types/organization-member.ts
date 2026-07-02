@@ -1,11 +1,5 @@
 import type { Organization } from "./organization";
-
-type User = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-}
+import type { User } from "./user";
 
 export type OrganizationMember = {
     organizationId: number;

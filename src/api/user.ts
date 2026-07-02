@@ -1,6 +1,7 @@
 import type { Membership, UserMe } from '../types';
 import { RestrictedAccessError } from '../errors/RestrictedAccessError';
 import { api } from './client';
+import type { User } from '../types/user';
 
 const ALLOWED_ORG_SLUG = 'norma+';
 
@@ -22,4 +23,9 @@ export const getActiveMembership = (memberships: Membership[]): Membership => {
     }
 
     return membership;
+};
+
+export const getAllUsers = async (): Promise<User[]> => {
+    const { data } = await api.get<User[]>('/users');
+    return data;
 };
