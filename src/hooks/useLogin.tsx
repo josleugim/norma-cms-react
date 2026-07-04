@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+import { toast } from 'sonner';
 import { login as loginRequest, logout } from '../api/auth';
 import { useAuth } from '../context/AuthContext';
 
@@ -27,8 +29,14 @@ const useLogin = () => {
             await logout();
             clearSession();
 
-            const message = err instanceof Error ? err.message : 'Login failed';
+            let message = '';
+            
+            if (axios.isAxiosError(err)) {
+                message = 'Error al iniciar sesión';
+            }
+
             setError(message);
+            toast.error(message);
         } finally {
             setIsLoading(false);
         }
