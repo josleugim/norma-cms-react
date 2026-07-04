@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import useLogin from '../hooks/useLogin';
 
-
 const Login = () => {
-    const { login } = useLogin();
+    const { login, isLoading } = useLogin();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const onLoginAction = async (formData: FormData) => {
-        await login({
-            email: formData.get('email') as string,
-            password: formData.get('password') as string,
-        });
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await login({ email, password });
     };
 
     return (
@@ -49,14 +49,15 @@ const Login = () => {
                     Inicia sesión en tu cuenta
                 </h1>
 
-                <form action={onLoginAction}>
+                <form onSubmit={handleSubmit}>
                     <div style={{ marginBottom: '16px' }}>
                         <label style={{ display: 'block', marginBottom: '6px', fontWeight: '500', fontSize: '0.9rem', color: '#374151' }}>
                             Correo electrónico
                         </label>
                         <input
-                            name="email"
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="tu@correo.com"
                             required
                             style={{
@@ -78,8 +79,9 @@ const Login = () => {
                             Contraseña
                         </label>
                         <input
-                            name="password"
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
                             required
                             style={{
@@ -98,20 +100,22 @@ const Login = () => {
 
                     <button
                         type="submit"
+                        disabled={isLoading}
                         style={{
                             width: '100%',
                             padding: '14px',
-                            backgroundColor: '#111',
+                            backgroundColor: isLoading ? '#555' : '#111',
                             color: 'white',
                             border: 'none',
                             borderRadius: '10px',
                             fontSize: '1rem',
                             fontWeight: '600',
-                            cursor: 'pointer',
+                            cursor: isLoading ? 'not-allowed' : 'pointer',
                             letterSpacing: '0.01em',
+                            transition: 'background-color 0.2s',
                         }}
                     >
-                        Iniciar sesión
+                        {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </button>
                 </form>
 
