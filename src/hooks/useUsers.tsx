@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { User } from "../types/user";
-import { getAllUsers } from "../api/user";
-import { useEffect, useCallback } from "react";
+import { getAllUsers, activateOrDeactivateUser } from "../api/user";
 
 const useUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [reloadKey, setReloadKey] = useState(0);
+    const [togglingUserId, setTogglingUserId] = useState<number | null>(null);
 
     useEffect(() => {
         let cancelled = false;
@@ -44,7 +44,25 @@ const useUsers = () => {
         setReloadKey((key) => key + 1);
     }, []);
 
-    return { users, isLoading, error, refetch };
+    const toggleUserActive = useCallback(async (user: User) => {
+        setTogglingUserId(user.id);
+        setError(null);
+
+        try {
+            await activateOrDeactivateUser(user.id, !user.isActive);
+            setUsers((current) =>
+                current.map((item) =>
+                    item.id === user.id ? { ...item, isActive: !user.isActive } : item,
+                ),
+            );
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Error al actualizar el usuario');
+        } finally {
+            setTogglingUserId(null);
+        }
+    }, []);
+
+    return { users, isLoading, error, refetch, toggleUserActive, togglingUserId };
 }
 
 export default useUsers;

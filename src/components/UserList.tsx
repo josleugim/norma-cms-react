@@ -1,9 +1,37 @@
-import useUsers from "../hooks/useUsers";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Button } from "primereact/button";
+import { Tag } from "primereact/tag";
+import type { User } from "../types/user";
+import useUsers from "../hooks/useUsers";
 
 const UserList = () => {
-    const { users, isLoading, error } = useUsers();
+    const { users, isLoading, error, toggleUserActive, togglingUserId } = useUsers();
+
+    const statusBody = (user: User) => (
+        <Tag
+            value={user.isActive ? 'Activo' : 'Inactivo'}
+            severity={user.isActive ? 'success' : 'danger'}
+        />
+    );
+
+    const createdAtBody = (user: User) =>
+        new Date(user.createdAt).toLocaleDateString('es-MX', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+        });
+
+    const optionsBody = (user: User) => (
+        <Button
+            className={`button is-small ${user.isActive ? 'is-danger is-outlined' : 'is-success'}`}
+            label={user.isActive ? 'Desactivar' : 'Activar'}
+            size="small"
+            loading={togglingUserId === user.id}
+            disabled={togglingUserId !== null}
+            onClick={() => toggleUserActive(user)}
+        />
+    );
 
     if (error) {
         return <div className="notification is-danger">{error}</div>;
@@ -24,8 +52,9 @@ const UserList = () => {
                 <Column field="firstName" header="Nombre" />
                 <Column field="lastName" header="Apellido" />
                 <Column field="email" header="Correo" />
-                <Column field="isActive" header="Activo" />
-                <Column field="createdAt" header="Creado" />
+                <Column header="Estado" body={statusBody} style={{ width: '8rem' }} />
+                <Column header="Creado" body={createdAtBody} style={{ width: '10rem' }} />
+                <Column header="Opciones" body={optionsBody} style={{ width: '9rem' }} />
             </DataTable>
         </div>
     );

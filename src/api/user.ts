@@ -30,6 +30,6 @@ export const getAllUsers = async (): Promise<User[]> => {
     return data.items;
 };
 
-export const activateOrDeactivateUser = async (userId: string, isActive: boolean): Promise<void> => {
+export const activateOrDeactivateUser = async (userId: number, isActive: boolean): Promise<void> => {
     await api.patch(`/users/${userId}`, { isActive: isActive });
 };
