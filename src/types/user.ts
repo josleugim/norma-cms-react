@@ -58,4 +58,13 @@ export type User = {
     firstName: string;
     lastName: string;
     email: string;
+    isActive: boolean;
+    createdAt: string;
+};
+
+export type UserListResponse  = {
+    items: User[];
+    page: number;
+    pageSize: number;
+    total: number;
 }
