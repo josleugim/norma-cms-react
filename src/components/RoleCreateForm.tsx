@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Link } from 'react-router';
 import type { Organization } from '../types/organization';
+import type { SubmitEvent } from 'react';
 
 type RoleCreateFormProps = {
     organizations: Organization[];
@@ -39,7 +40,7 @@ const RoleCreateForm = ({
     isSubmitting,
     error,
 }: RoleCreateFormProps) => {
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         await submit();
     };

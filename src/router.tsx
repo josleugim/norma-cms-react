@@ -12,6 +12,7 @@ import User from './pages/User';
 import UserCreate from './pages/UserCreate';
 import OrganizationMember from './pages/OrganizationMember';
 import OrganizationMemberCreate from './pages/OrganizationMemberCreate';
+import DigitalResolutionEmbedding from './pages/DigitalResolutionEmbedding';
 
 const AppRoutes = () => (
     <Routes>
@@ -27,6 +28,7 @@ const AppRoutes = () => (
         <Route path="/organization-members" element={<ProtectedRoute><OrganizationMember /></ProtectedRoute>} />
         <Route path="/organization-members/create" element={<ProtectedRoute><OrganizationMemberCreate /></ProtectedRoute>} />
         <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+        <Route path="/digital-resolution-embedding" element={<ProtectedRoute><DigitalResolutionEmbedding /></ProtectedRoute>} />
     </Routes>
 );
 

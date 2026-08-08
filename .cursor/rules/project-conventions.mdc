@@ -1,0 +1,66 @@
+---
+description: Stack versions, project structure, and coding conventions for norma-cms-react
+alwaysApply: true
+---
+
+# Norma CMS React — Project Conventions
+
+## Installed stack (minimum versions — do not target older APIs)
+
+Use APIs and patterns compatible with these packages. Never generate code that requires or assumes older major versions.
+
+| Package | Version | Notes |
+|---------|---------|--------|
+| react / react-dom | ^19.2 | Functional components only; `createRoot`; React 19 APIs OK |
+| react-router | ^7.13 | Import from `react-router` — **not** `react-router-dom` |
+| axios | ^1.16 | Use shared `api` client from `src/api/client.ts` |
+| primereact | ^10.9 | Import per-component (`primereact/datatable`, etc.) |
+| primeicons | ^7 | Icon classes via PrimeIcons |
+| bulma | ^1.0 | Layout/utility classes (`is-flex`, `button`, `title`, etc.) |
+| sonner | ^2 | Toasts via `<Toaster />` / `toast` |
+| vite | ^7.3 | ESM (`"type": "module"`), `@vitejs/plugin-react-swc` |
+| typescript | ~5.9 | Strict TS; prefer `type` imports |
+| eslint | ^9 | Flat config era — do not add legacy `.eslintrc` patterns |
+
+## Project structure
+
+Place new files in the matching folder. Prefer kebab-case for multi-word domain filenames.
+
+```
+src/
+  api/           # HTTP calls (named exports). One file per domain: role.ts, user.ts
+  types/         # Domain types/request/response shapes: role.ts, organization-member.ts
+  hooks/         # Data/UI logic hooks (default export). useRole.tsx, useCreateRole.tsx
+  components/    # Presentational UI (default export). RoleList.tsx, Auth/
+  pages/         # Route-level screens (thin; compose components). Role.tsx, RoleCreate.tsx
+  context/       # React context providers
+  config/        # App config (e.g. API_URL)
+  errors/        # Custom error classes
+  router.tsx     # Route table
+  App.tsx        # Providers, global CSS imports, shell layout
+```
+
+### Feature layering (follow existing Role/User pattern)
+
+1. `src/types/<domain>.ts` — entity, list response, query params, create/update payloads
+2. `src/api/<domain>.ts` — thin axios wrappers using `api` from `./client`
+3. `src/hooks/use<Name>.tsx` — state, effects, loading/error; call API modules
+4. `src/components/<Name>.tsx` — PrimeReact + Bulma UI; consume hooks
+5. `src/pages/<Name>.tsx` — page chrome + component; register route in `router.tsx`
+
+## Coding patterns
+
+- **API**: named exports (`getRoles`, `createRole`); return `data` from axios; type with generics.
+- **Hooks**: default export; `useState`/`useEffect` with cancellation flags for async; Spanish user-facing error strings (match existing UI).
+- **Components/pages**: default export; functional components.
+- **Routing**: wrap authenticated pages in `ProtectedRoute`; guests in `GuestRoute`.
+- **UI**: PrimeReact for tables/forms/inputs; Bulma for layout and buttons/links. Do not introduce another UI kit or CSS framework.
+- **Styles**: global Bulma/PrimeReact in `App.tsx`; optional `*.module.css` next to a component when needed.
+- **Imports**: relative paths within `src/` (as the codebase does today). Prefer `import type` for types.
+
+## Anti-patterns
+
+- Do not use `react-router-dom` imports or v5/v6-only APIs when v7 equivalents exist.
+- Do not add React Query/SWR/Redux unless explicitly requested — hooks + local state is the pattern.
+- Do not put API calls or heavy logic in pages; keep pages thin.
+- Do not invent parallel folders (`services/`, `stores/`, `features/`) — extend the existing layout.
