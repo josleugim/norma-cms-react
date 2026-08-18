@@ -45,6 +45,7 @@ const Menu = () => {
                                     <Link className="navbar-item" to="/users">Usuarios</Link>
                                     <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
                                     <Link className="navbar-item" to="/digital-resolution-embedding">Embedding (Resoluciones)</Link>
+                                    <Link className="navbar-item" to="/upload-ocr-resolutions">Subir resoluciones OCR</Link>
                                 </>
                             )}
                         </>
