@@ -45,7 +45,13 @@ const Menu = () => {
                                     <Link className="navbar-item" to="/users">Usuarios</Link>
                                     <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
                                     <Link className="navbar-item" to="/digital-resolution-embedding">Embedding (Resoluciones)</Link>
-                                    <Link className="navbar-item" to="/upload-ocr-resolutions">Subir resoluciones OCR</Link>
+                                    <div className="navbar-item has-dropdown is-hoverable">
+                                        <a className="navbar-link">Resoluciones</a>
+                                        <div className="navbar-dropdown">
+                                            <Link className="navbar-item" to="/upload-ocr-resolutions">Subir resoluciones OCR</Link>
+                                            <Link className="navbar-item" to="/lading-ai">Landing AI</Link>
+                                        </div>
+                                    </div>
                                 </>
                             )}
                         </>
