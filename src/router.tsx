@@ -13,6 +13,8 @@ import UserCreate from './pages/UserCreate';
 import OrganizationMember from './pages/OrganizationMember';
 import OrganizationMemberCreate from './pages/OrganizationMemberCreate';
 import DigitalResolutionEmbedding from './pages/DigitalResolutionEmbedding';
+import UploadOcrResolutions from './pages/UploadOcrResolutions';
+import LandingAi from './pages/LandingAi';
 
 const AppRoutes = () => (
     <Routes>
@@ -29,6 +31,8 @@ const AppRoutes = () => (
         <Route path="/organization-members/create" element={<ProtectedRoute><OrganizationMemberCreate /></ProtectedRoute>} />
         <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
         <Route path="/digital-resolution-embedding" element={<ProtectedRoute><DigitalResolutionEmbedding /></ProtectedRoute>} />
+        <Route path="/upload-ocr-resolutions" element={<ProtectedRoute><UploadOcrResolutions /></ProtectedRoute>} />
+        <Route path="/lading-ai" element={<ProtectedRoute><LandingAi /></ProtectedRoute>} />
     </Routes>
 );
 
