@@ -16,6 +16,8 @@ import DigitalResolutionEmbedding from './pages/DigitalResolutionEmbedding';
 import UploadOcrResolutions from './pages/UploadOcrResolutions';
 import LandingAi from './pages/LandingAi';
 import SanitizedJson from './pages/SanitizedJson';
+import Case from './pages/Case';
+import CaseUpdate from './pages/CaseUpdate';
 
 const AppRoutes = () => (
     <Routes>
@@ -35,6 +37,8 @@ const AppRoutes = () => (
         <Route path="/upload-ocr-resolutions" element={<ProtectedRoute><UploadOcrResolutions /></ProtectedRoute>} />
         <Route path="/lading-ai" element={<ProtectedRoute><LandingAi /></ProtectedRoute>} />
         <Route path="/sanitized" element={<ProtectedRoute><SanitizedJson /></ProtectedRoute>} />
+        <Route path="/cases" element={<ProtectedRoute><Case /></ProtectedRoute>} />
+        <Route path="/cases/:id/edit" element={<ProtectedRoute><CaseUpdate /></ProtectedRoute>} />
     </Routes>
 );
 
