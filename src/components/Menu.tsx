@@ -38,12 +38,18 @@ const Menu = () => {
                             <Link className="navbar-item" to="/">Home</Link>
                             <Link className="navbar-item" to="/resolutions">Resolutions</Link>
                             <Link className="navbar-item" to="/criteria">Criterios</Link>
+                            <Link className="navbar-item" to="/cases">Casos</Link>
                             {isAdmin && (
                                 <>
-                                    <Link className="navbar-item" to="/organizations">Organizaciones</Link>
-                                    <Link className="navbar-item" to="/roles">Roles</Link>
-                                    <Link className="navbar-item" to="/users">Usuarios</Link>
-                                    <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
+                                    <div className="navbar-item has-dropdown is-hoverable">
+                                        <a className="navbar-link">Administración</a>
+                                        <div className="navbar-dropdown">
+                                            <Link className="navbar-item" to="/organizations">Organizaciones</Link>
+                                            <Link className="navbar-item" to="/roles">Roles</Link>
+                                            <Link className="navbar-item" to="/users">Usuarios</Link>
+                                            <Link className="navbar-item" to="/organization-members">Miembros de la organización</Link>
+                                        </div>
+                                    </div>
                                     <Link className="navbar-item" to="/digital-resolution-embedding">Embedding (Resoluciones)</Link>
                                     <div className="navbar-item has-dropdown is-hoverable">
                                         <a className="navbar-link">Resoluciones</a>
