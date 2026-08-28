@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import type { Case } from "../types/case";
 import { getCase, getCases, updateCase } from "../api/case";
 
+const ALL_CASES_LIMIT = 10000;
+
 const useUpdateCase = (id: number) => {
     const navigate = useNavigate();
     const [cases, setCases] = useState<Case[]>([]);
@@ -22,7 +24,7 @@ const useUpdateCase = (id: number) => {
             try {
                 const [caseResponse, casesResponse] = await Promise.all([
                     getCase(id),
-                    getCases(),
+                    getCases({ limit: ALL_CASES_LIMIT }),
                 ]);
 
                 if (!cancelled) {

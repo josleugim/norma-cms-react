@@ -17,6 +17,7 @@ export type CaseListResponse = {
 export type CaseQueryParams = {
     page?: number;
     pageSize?: number;
+    limit?: number;
 };
 
 export type CaseUpdateRequest = {
