@@ -1,9 +1,15 @@
 import type { Case } from '../../types/case';
 import type * as React from 'react';
-import { Dropdown } from 'primereact/dropdown';
+import { useEffect, useMemo, useState } from 'react';
+import { AutoComplete, type AutoCompleteChangeEvent, type AutoCompleteCompleteEvent } from 'primereact/autocomplete';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router';
+
+type CaseOption = {
+    id: number | null;
+    label: string;
+};
 
 type CaseUpdateFormProps = {
     cases: Case[];
@@ -33,15 +39,55 @@ const CaseUpdateForm = ({
         await submit();
     };
 
-    const caseOptions = [
-        { label: 'Sin caso padre', value: null },
-        ...cases
-            .filter((_case: Case) => _case.id !== caseId)
-            .map((_case: Case) => ({
-                label: _case.name ?? _case.caseLink,
-                value: _case.id,
-            })),
-    ];
+    const allOptions = useMemo<CaseOption[]>(
+        () =>
+            cases
+                .filter((_case: Case) => _case.id !== caseId)
+                .map((_case: Case) => ({
+                    id: _case.id,
+                    label: `${_case.caseLink}${_case.name ? ` - ${_case.name}` : ''}`,
+                })),
+        [cases, caseId]
+    );
+
+    const [suggestions, setSuggestions] = useState<CaseOption[]>(allOptions);
+    const [inputValue, setInputValue] = useState('');
+
+    useEffect(() => {
+        setSuggestions(allOptions);
+    }, [allOptions]);
+
+    useEffect(() => {
+        const selected = allOptions.find((option) => option.id === parentId);
+        setInputValue(selected?.label ?? '');
+    }, [allOptions, parentId]);
+
+    const handleSearch = (event: AutoCompleteCompleteEvent) => {
+        const query = event.query.toLowerCase();
+        setSuggestions(
+            query
+                ? allOptions.filter((option) => option.label.toLowerCase().includes(query))
+                : allOptions
+        );
+    };
+
+    const handleChange = (event: AutoCompleteChangeEvent) => {
+        if (typeof event.value === 'string') {
+            setInputValue(event.value);
+            return;
+        }
+
+        const option = event.value as CaseOption | null;
+        if (option) {
+            setInputValue(option.label);
+            setParentId(option.id);
+        }
+    };
+
+    const handleClear = () => {
+        setInputValue('');
+        setParentId(null);
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -53,17 +99,32 @@ const CaseUpdateForm = ({
                 <label className="label" htmlFor="parentId">
                     Caso padre
                 </label>
-                <div className="control">
-                    <Dropdown
-                        id="parentId"
-                        value={parentId}
-                        options={caseOptions}
-                        optionLabel="label"
-                        optionValue="value"
-                        onChange={(e) => setParentId(e.value)}
-                        placeholder="Selecciona un caso padre"
-                        style={{ width: '100%' }}
-                    />
+                <div className="field is-grouped">
+                    <div className="control is-expanded">
+                        <AutoComplete
+                            id="parentId"
+                            value={inputValue}
+                            suggestions={suggestions}
+                            field="label"
+                            dropdown
+                            delay={200}
+                            onChange={handleChange}
+                            completeMethod={handleSearch}
+                            placeholder="Busca o selecciona un caso padre"
+                            style={{ width: '100%' }}
+                            emptyMessage="No se encontraron casos"
+                        />
+                    </div>
+                    {parentId !== null && (
+                        <div className="control">
+                            <Button
+                                type="button"
+                                label="Limpiar"
+                                severity="secondary"
+                                onClick={handleClear}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 
