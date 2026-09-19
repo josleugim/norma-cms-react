@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react";
 import { generateDigitalResolutionEbedding } from "../api/digital-resolution";
+import type { DigitalResolutionEmbeddingResponse } from "../types/digital-resolution";
 
 const useCreateDigitalResolutionEmbedding = () => {
     const [caseLink, setCaseLink] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [result, setResult] = useState<DigitalResolutionEmbeddingResponse | null>(null);
 
     const submit = useCallback(async () => {
         if (!caseLink) {
@@ -14,9 +16,11 @@ const useCreateDigitalResolutionEmbedding = () => {
 
         setIsSubmitting(true);
         setError(null);
+        setResult(null);
 
         try {
-            await generateDigitalResolutionEbedding(caseLink);
+            const response = await generateDigitalResolutionEbedding(caseLink);
+            setResult(response);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Error al crear el embedding');
         } finally {
@@ -30,6 +34,7 @@ const useCreateDigitalResolutionEmbedding = () => {
         submit,
         isSubmitting,
         error,
+        result,
     };
 };
 

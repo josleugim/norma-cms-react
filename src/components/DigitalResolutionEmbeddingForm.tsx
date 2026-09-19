@@ -1,6 +1,7 @@
 import type { SubmitEvent } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import type { DigitalResolutionEmbeddingResponse } from '../types/digital-resolution';
 
 type DigitalResolutionEmbeddingFormProps = {
     caseLink: string;
@@ -8,10 +9,11 @@ type DigitalResolutionEmbeddingFormProps = {
     submit: () => Promise<void>;
     isSubmitting: boolean;
     error: string | null;
+    result: DigitalResolutionEmbeddingResponse | null;
 };
 
 const DigitalResolutionEmbeddingForm = (
-    { caseLink, setCaseLink, submit, isSubmitting, error }: DigitalResolutionEmbeddingFormProps
+    { caseLink, setCaseLink, submit, isSubmitting, error, result }: DigitalResolutionEmbeddingFormProps
 ) => {
     const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -21,6 +23,11 @@ const DigitalResolutionEmbeddingForm = (
     return (
         <form onSubmit={handleSubmit}>
             {error && <div className="notification is-danger mb-4">{error}</div>}
+            {result && (
+                <div className="notification is-success mb-4">
+                    Embedding solicitado para {result.caseLink}. Estado: {result.status}
+                </div>
+            )}
             <div className="field">
                 <label className="label" htmlFor="caseLink">
                     Caso

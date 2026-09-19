@@ -11,7 +11,5 @@ export type DigitalResolution = {
 
 export type DigitalResolutionEmbeddingResponse = {
     caseLink: string;
-    total: number;
-    embedded: number;
-    skipped: number;
+    status: string;
 };
