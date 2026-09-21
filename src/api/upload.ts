@@ -1,4 +1,7 @@
-import type { OcrResolutionsUploadResponse } from '../types/upload';
+import type {
+    LandingAIUploadResponse,
+    OcrResolutionsUploadResponse,
+} from '../types/upload';
 import { api } from './client';
 
 type UploadOcrResolutionsOptions = {
@@ -24,5 +27,16 @@ export const uploadOcrResolutions = async (
         },
     );
 
+    return data;
+};
+
+export const uploadLandingAI = async (file: File): Promise<LandingAIUploadResponse> => {
+    const formData = new FormData();
+    formData.append('files', file);
+
+    const { data } = await api.post<LandingAIUploadResponse>(
+        '/upload/ocr-landing-ai',
+        formData,
+    );
     return data;
 };
