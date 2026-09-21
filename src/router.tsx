@@ -14,6 +14,7 @@ import OrganizationMember from './pages/OrganizationMember';
 import OrganizationMemberCreate from './pages/OrganizationMemberCreate';
 import DigitalResolutionEmbedding from './pages/DigitalResolutionEmbedding';
 import UploadOcrResolutions from './pages/UploadOcrResolutions';
+import UploadLandingAi from './pages/UploadLandingAi';
 import LandingAi from './pages/LandingAi';
 import SanitizedJson from './pages/SanitizedJson';
 import Case from './pages/Case';
@@ -35,6 +36,7 @@ const AppRoutes = () => (
         <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
         <Route path="/digital-resolution-embedding" element={<ProtectedRoute><DigitalResolutionEmbedding /></ProtectedRoute>} />
         <Route path="/upload-ocr-resolutions" element={<ProtectedRoute><UploadOcrResolutions /></ProtectedRoute>} />
+        <Route path="/upload-landing-ai" element={<ProtectedRoute><UploadLandingAi /></ProtectedRoute>} />
         <Route path="/lading-ai" element={<ProtectedRoute><LandingAi /></ProtectedRoute>} />
         <Route path="/sanitized" element={<ProtectedRoute><SanitizedJson /></ProtectedRoute>} />
         <Route path="/cases" element={<ProtectedRoute><Case /></ProtectedRoute>} />
