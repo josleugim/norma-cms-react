@@ -56,6 +56,7 @@ const Menu = () => {
                                         <div className="navbar-dropdown">
                                             <Link className="navbar-item" to="/upload-ocr-resolutions">Subir resoluciones OCR</Link>
                                             <Link className="navbar-item" to="/upload-landing-ai">Subir Landing AI</Link>
+                                            <Link className="navbar-item" to="/upload-dedup">Subir JSON dedup</Link>
                                             <Link className="navbar-item" to="/lading-ai">Landing AI</Link>
                                             <Link className="navbar-item" to="/sanitized">Sanitized JSON</Link>
                                         </div>
