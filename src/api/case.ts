@@ -1,5 +1,11 @@
 import { api } from './client';
-import type { Case, CaseListResponse, CaseQueryParams, CaseUpdateRequest } from '../types/case';
+import type {
+    Case,
+    CaseGeneralInformationUploadResponse,
+    CaseListResponse,
+    CaseQueryParams,
+    CaseUpdateRequest,
+} from '../types/case';
 
 export const getCases = async (
     params: CaseQueryParams = {}
@@ -15,5 +21,19 @@ export const getCase = async (id: number): Promise<Case> => {
 
 export const updateCase = async (caseId: number, payload: CaseUpdateRequest): Promise<Case> => {
     const { data } = await api.patch<Case>(`/cases/${caseId}`, payload);
+    return data;
+};
+
+export const uploadCaseGeneralInformation = async (
+    file: File,
+): Promise<CaseGeneralInformationUploadResponse> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const { data } = await api.post<CaseGeneralInformationUploadResponse>(
+        '/cases/general-information',
+        formData,
+        { timeout: 0 },
+    );
     return data;
 };

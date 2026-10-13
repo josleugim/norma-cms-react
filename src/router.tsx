@@ -19,6 +19,7 @@ import UploadDedup from './pages/UploadDedup';
 import LandingAi from './pages/LandingAi';
 import SanitizedJson from './pages/SanitizedJson';
 import Case from './pages/Case';
+import CaseGeneralInformation from './pages/CaseGeneralInformation';
 import CaseUpdate from './pages/CaseUpdate';
 
 const AppRoutes = () => (
@@ -42,6 +43,7 @@ const AppRoutes = () => (
         <Route path="/lading-ai" element={<ProtectedRoute><LandingAi /></ProtectedRoute>} />
         <Route path="/sanitized" element={<ProtectedRoute><SanitizedJson /></ProtectedRoute>} />
         <Route path="/cases" element={<ProtectedRoute><Case /></ProtectedRoute>} />
+        <Route path="/cases/general-information" element={<ProtectedRoute><CaseGeneralInformation /></ProtectedRoute>} />
         <Route path="/cases/:id/edit" element={<ProtectedRoute><CaseUpdate /></ProtectedRoute>} />
     </Routes>
 );

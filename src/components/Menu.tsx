@@ -38,7 +38,15 @@ const Menu = () => {
                             <Link className="navbar-item" to="/">Home</Link>
                             <Link className="navbar-item" to="/resolutions">Resolutions</Link>
                             <Link className="navbar-item" to="/criteria">Criterios</Link>
-                            <Link className="navbar-item" to="/cases">Casos</Link>
+                            <div className="navbar-item has-dropdown is-hoverable">
+                                <a className="navbar-link">Casos</a>
+                                <div className="navbar-dropdown">
+                                    <Link className="navbar-item" to="/cases">Casos</Link>
+                                    {isAdmin && (
+                                        <Link className="navbar-item" to="/cases/general-information">Información general</Link>
+                                    )}
+                                </div>
+                            </div>
                             {isAdmin && (
                                 <>
                                     <div className="navbar-item has-dropdown is-hoverable">
